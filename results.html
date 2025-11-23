@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="View your content planning results and ideas" />
+  <title>Content Ideas - Results</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/results.css" />
+</head>
+<body>
+  <header>
+    <h1>📝 Content Planner</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="results.html" class="active" aria-current="page">Results</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="results-header" id="resultsHeader">
+      <h2>Content Ideas</h2>
+      <div class="search-info" id="searchInfo"></div>
+    </div>
+
+    <div class="results-container" id="resultsContainer">
+      <div class="loader" role="status" aria-label="Loading results"></div>
+    </div>
+
+    <div class="back-button" style="text-align: center;">
+      <a href="index.html">← Back to Search</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Content Planner. Powered by Answer the Public API.</p>
+  </footer>
+
+  <script type="module" src="js/results-main.js"></script>
+</body>
+</html>

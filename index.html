@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Content Planner - Generate content ideas based on popular searches using Answer the Public API" />
+  <title>Content Planner - Generate Content Ideas</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/home.css" />
+</head>
+<body>
+  <header>
+    <h1>🌍 Worldwide API Tracker </h1>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+        <li><a href="results.html">Saved Searches</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="search-section">
+      <h2>Plan Your Content Strategy</h2>
+      <form id="searchForm" novalidate>
+        <div class="form-group">
+          <label for="keyword">
+            Keyword <span class="required" aria-label="required">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="keyword" 
+            name="keyword" 
+            placeholder="e.g., digital marketing, healthy recipes"
+            required 
+            minlength="2"
+            maxlength="50"
+            aria-describedby="keyword-error"
+          />
+          <span class="field-error" id="keyword-error" role="alert"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="country">
+            Country <span class="required" aria-label="required">*</span>
+          </label>
+          <select id="country" name="country" required aria-describedby="country-error">
+            <option value="">Select a country</option>
+            <option value="us">United States</option>
+            <option value="uk">United Kingdom</option>
+            <option value="ca">Canada</option>
+            <option value="au">Australia</option>
+            <option value="de">Germany</option>
+            <option value="fr">France</option>
+            <option value="es">Spain</option>
+            <option value="it">Italy</option>
+            <option value="br">Brazil</option>
+            <option value="in">India</option>
+          </select>
+          <span class="field-error" id="country-error" role="alert"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="industry">
+            Industry
+          </label>
+          <select id="industry" name="industry">
+            <option value="">All Industries</option>
+            <option value="technology">Technology</option>
+            <option value="health">Health & Wellness</option>
+            <option value="finance">Finance</option>
+            <option value="education">Education</option>
+            <option value="marketing">Marketing</option>
+            <option value="ecommerce">E-commerce</option>
+            <option value="food">Food & Beverage</option>
+            <option value="travel">Travel</option>
+            <option value="fashion">Fashion</option>
+            <option value="real-estate">Real Estate</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">
+            Notes (Optional)
+          </label>
+          <textarea 
+            id="notes" 
+            name="notes" 
+            rows="3" 
+            placeholder="Add any additional notes or context for this search..."
+            maxlength="200"
+          ></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn">
+          <span>Generate Content Ideas</span>
+        </button>
+      </form>
+    </section>
+
+    <section class="info-modal" aria-live="polite">
+      <p>💡 <strong>Pro Tip:</strong> Use specific keywords to get more targeted content ideas for your niche!</p>
+    </section>
+
+    <section class="saved-searches hidden" id="savedSearchesSection">
+      <h2>Recent Searches</h2>
+      <div class="search-history" id="searchHistory"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Content Planner. Powered by Answer the Public API.</p>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
