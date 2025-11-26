@@ -1,0 +1,80 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal--visible {
+  display: flex;
+}
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+.modal-dialog {
+  position: relative;
+  z-index: 1;
+  background-color: #fff;
+  padding: 2rem;
+  max-width: 520px;
+  width: 90%;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-hover);
+  animation: fadeInUp 0.25s ease-out;
+}
+
+.modal-dialog h2 {
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.modal-dialog p,
+.modal-dialog li {
+  color: var(--text-dark);
+  font-size: 0.95rem;
+}
+
+.modal-dialog ul {
+  margin-top: 0.75rem;
+  padding-left: 1.25rem;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text-light);
+}
+
+.modal-close:hover {
+  color: var(--danger-color);
+}
+
+/* Optional: style the trigger button slightly differently */
+.open-modal-btn {
+  margin-top: 1rem;
+  background-color: #fff;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all var(--transition-speed);
+}
+
+.open-modal-btn:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+}

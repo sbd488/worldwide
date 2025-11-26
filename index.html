@@ -7,6 +7,8 @@
   <title>Content Planner - Generate Content Ideas</title>
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/home.css" />
+  <!-- NEW: modal styles -->
+  <link rel="stylesheet" href="css/modal.css" />
 </head>
 <body>
   <header>
@@ -100,6 +102,46 @@
 
     <section class="info-modal" aria-live="polite">
       <p>💡 <strong>Pro Tip:</strong> Use specific keywords to get more targeted content ideas for your niche!</p>
+
+      <!-- NEW: Modal trigger button -->
+      <button type="button" class="open-modal-btn" data-open-modal="#infoModal">
+        How does this work?
+      </button>
+
+      <!-- NEW: Modal markup -->
+      <div
+        class="modal"
+        id="infoModal"
+        aria-hidden="true"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="infoModalTitle"
+      >
+        <div class="modal-overlay" data-close-modal></div>
+
+        <div class="modal-dialog">
+          <button
+            type="button"
+            class="modal-close"
+            aria-label="Close"
+            data-close-modal
+          >
+            &times;
+          </button>
+
+          <h2 id="infoModalTitle">How Content Planner Works</h2>
+          <p>
+            Enter a keyword and choose a country. We call the Answer the Public API
+            to fetch real search data, then organize it by volume, difficulty, and
+            CPC so you can quickly spot content ideas.
+          </p>
+          <ul>
+            <li>🔍 Use specific, niche keywords.</li>
+            <li>📈 Focus on high-volume, low-difficulty ideas first.</li>
+            <li>💰 High-CPC ideas can be great for monetized content.</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <section class="saved-searches hidden" id="savedSearchesSection">
@@ -113,5 +155,7 @@
   </footer>
 
   <script type="module" src="js/main.js"></script>
+  <!-- NEW: modal script -->
+  <script type="module" src="js/modal.js"></script>
 </body>
 </html>
