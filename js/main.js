@@ -1,4 +1,3 @@
-// Main application script for home page
 import { fetchContentIdeas, parseContentIdeas } from "./api.js"
 import { saveSearch, getAllSearches, deleteSearch } from "./storage.js"
 import { validateForm, validateField, getFormData, setButtonLoading } from "./form.js"
@@ -9,9 +8,22 @@ document.addEventListener("DOMContentLoaded", initApp)
 
 function initApp() {
   const form = document.getElementById("searchForm")
+  if (!form) return
+
   const submitBtn = document.getElementById("submitBtn")
   const savedSearchesSection = document.getElementById("savedSearchesSection")
   const searchHistory = document.getElementById("searchHistory")
+
+  // Delete confirmation modal elements
+  const deleteModal = document.getElementById("deleteSearchModal")
+  const confirmDeleteBtn = document.getElementById("confirmDeleteBtn")
+  const cancelDeleteBtn = document.getElementById("cancelDeleteBtn")
+  let searchIdToDelete = null
+
+  // NEW: Loading modal elements
+  const loadingModal = document.getElementById("loadingModal")
+  const cancelLoadingBtn = document.getElementById("cancelLoadingBtn")
+  let isSearchCancelled = false
 
   // Set up form validation
   setupFormValidation(form)
@@ -27,11 +39,18 @@ function initApp() {
 
     const formData = getFormData(form)
     setButtonLoading(submitBtn, true)
+    openLoadingModal()
 
     try {
-      // Fetch data from API
       const apiData = await fetchContentIdeas(formData.keyword, formData.country)
       const parsedData = parseContentIdeas(apiData)
+
+      // If user cancelled while we were waiting, stop here
+      if (isSearchCancelled) {
+        setButtonLoading(submitBtn, false)
+        closeLoadingModal()
+        return
+      }
 
       // Save search to local storage
       const savedSearch = saveSearch({
@@ -44,6 +63,7 @@ function initApp() {
 
       if (savedSearch) {
         showSuccess("Content ideas generated successfully!", form.parentElement)
+        closeLoadingModal()
 
         // Redirect to results page with search ID
         setTimeout(() => {
@@ -51,11 +71,100 @@ function initApp() {
         }, 1000)
       }
     } catch (error) {
-      console.error("Error:", error)
-      showError("Failed to fetch content ideas. Please try again.", form.parentElement)
-      setButtonLoading(submitBtn, false)
+      // If the user cancelled, we silently ignore errors from this request
+      if (!isSearchCancelled) {
+        console.error("Error:", error)
+        showError("Failed to fetch content ideas. Please try again.", form.parentElement)
+        setButtonLoading(submitBtn, false)
+        closeLoadingModal()
+      }
     }
   })
+
+  // ---------- Loading modal helpers ----------
+
+  function openLoadingModal() {
+    if (!loadingModal) return
+    isSearchCancelled = false
+    loadingModal.classList.add("modal--visible")
+    loadingModal.setAttribute("aria-hidden", "false")
+    document.body.style.overflow = "hidden"
+  }
+
+  function closeLoadingModal() {
+    if (!loadingModal) return
+    loadingModal.classList.remove("modal--visible")
+    loadingModal.setAttribute("aria-hidden", "true")
+    document.body.style.overflow = ""
+  }
+
+  if (cancelLoadingBtn) {
+    cancelLoadingBtn.addEventListener("click", () => {
+      // Mark as cancelled so the async logic ignores the result
+      isSearchCancelled = true
+      closeLoadingModal()
+      setButtonLoading(submitBtn, false)
+      showError("Search canceled by user.", form.parentElement)
+    })
+  }
+
+  // ---------- Delete modal helpers ----------
+
+  function openDeleteModal(id) {
+    if (!deleteModal) {
+      // Fallback: native confirm if modal is missing
+      if (window.confirm("Are you sure you want to delete this search?")) {
+        performDelete(id)
+      }
+      return
+    }
+
+    searchIdToDelete = id
+    deleteModal.classList.add("modal--visible")
+    deleteModal.setAttribute("aria-hidden", "false")
+    document.body.style.overflow = "hidden"
+  }
+
+  function closeDeleteModal() {
+    if (!deleteModal) return
+    deleteModal.classList.remove("modal--visible")
+    deleteModal.setAttribute("aria-hidden", "true")
+    document.body.style.overflow = ""
+    searchIdToDelete = null
+  }
+
+  function performDelete(id) {
+    deleteSearch(id)
+    loadSavedSearches()
+    if (savedSearchesSection) {
+      showSuccess("Search deleted successfully", savedSearchesSection)
+    }
+  }
+
+  // Wire up delete modal buttons if present
+  if (confirmDeleteBtn) {
+    confirmDeleteBtn.addEventListener("click", () => {
+      if (searchIdToDelete !== null) {
+        performDelete(searchIdToDelete)
+      }
+      closeDeleteModal()
+    })
+  }
+
+  if (cancelDeleteBtn) {
+    cancelDeleteBtn.addEventListener("click", () => {
+      closeDeleteModal()
+    })
+  }
+
+  if (deleteModal) {
+    const overlay = deleteModal.querySelector(".modal-overlay")
+    if (overlay) {
+      overlay.addEventListener("click", () => {
+        closeDeleteModal()
+      })
+    }
+  }
 
   // Load and display saved searches
   loadSavedSearches()
@@ -83,6 +192,8 @@ function initApp() {
   }
 
   function loadSavedSearches() {
+    if (!savedSearchesSection || !searchHistory) return
+
     const searches = getAllSearches()
 
     if (searches.length > 0) {
@@ -97,13 +208,10 @@ function initApp() {
             window.location.href = `results.html?id=${id}`
           },
           (id) => {
-            if (confirm("Are you sure you want to delete this search?")) {
-              deleteSearch(id)
-              loadSavedSearches()
-              showSuccess("Search deleted successfully", savedSearchesSection)
-            }
+            openDeleteModal(id)
           },
         )
+
         searchHistory.appendChild(card)
       })
     } else {

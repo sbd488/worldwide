@@ -1,161 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Content Planner - Generate content ideas based on popular searches using Answer the Public API" />
-  <title>Content Planner - Generate Content Ideas</title>
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/home.css" />
-  <!-- NEW: modal styles -->
-  <link rel="stylesheet" href="css/modal.css" />
-</head>
-<body>
-  <header>
-    <h1>🌍 Worldwide API Tracker </h1>
-    <nav>
-      <ul>
-        <li><a href="index.html" class="active" aria-current="page">Home</a></li>
-        <li><a href="results.html">Saved Searches</a></li>
-      </ul>
-    </nav>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Content Planner - Generate content ideas based on popular searches using Answer the Public API"
+    />
+    <title>Content Planner - Generate Content Ideas</title>
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/modal.css" />
+  </head>
+  <body>
+    <header>
+      <h1>🌍 Worldwide API Tracker </h1>
 
-  <main>
-    <section class="search-section">
-      <h2>Plan Your Content Strategy</h2>
-      <form id="searchForm" novalidate>
-        <div class="form-group">
-          <label for="keyword">
-            Keyword <span class="required" aria-label="required">*</span>
-          </label>
-          <input 
-            type="text" 
-            id="keyword" 
-            name="keyword" 
-            placeholder="e.g., digital marketing, healthy recipes"
-            required 
-            minlength="2"
-            maxlength="50"
-            aria-describedby="keyword-error"
-          />
-          <span class="field-error" id="keyword-error" role="alert"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="country">
-            Country <span class="required" aria-label="required">*</span>
-          </label>
-          <select id="country" name="country" required aria-describedby="country-error">
-            <option value="">Select a country</option>
-            <option value="us">United States</option>
-            <option value="uk">United Kingdom</option>
-            <option value="ca">Canada</option>
-            <option value="au">Australia</option>
-            <option value="de">Germany</option>
-            <option value="fr">France</option>
-            <option value="es">Spain</option>
-            <option value="it">Italy</option>
-            <option value="br">Brazil</option>
-            <option value="in">India</option>
-          </select>
-          <span class="field-error" id="country-error" role="alert"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="industry">
-            Industry
-          </label>
-          <select id="industry" name="industry">
-            <option value="">All Industries</option>
-            <option value="technology">Technology</option>
-            <option value="health">Health & Wellness</option>
-            <option value="finance">Finance</option>
-            <option value="education">Education</option>
-            <option value="marketing">Marketing</option>
-            <option value="ecommerce">E-commerce</option>
-            <option value="food">Food & Beverage</option>
-            <option value="travel">Travel</option>
-            <option value="fashion">Fashion</option>
-            <option value="real-estate">Real Estate</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="notes">
-            Notes (Optional)
-          </label>
-          <textarea 
-            id="notes" 
-            name="notes" 
-            rows="3" 
-            placeholder="Add any additional notes or context for this search..."
-            maxlength="200"
-          ></textarea>
-        </div>
-
-        <button type="submit" id="submitBtn">
-          <span>Generate Content Ideas</span>
-        </button>
-      </form>
-    </section>
-
-    <section class="info-modal" aria-live="polite">
-      <p>💡 <strong>Pro Tip:</strong> Use specific keywords to get more targeted content ideas for your niche!</p>
-
-      <!-- NEW: Modal trigger button -->
-      <button type="button" class="open-modal-btn" data-open-modal="#infoModal">
-        How does this work?
+      <!-- Hamburger button for mobile -->
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primaryNav">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
       </button>
 
-      <!-- NEW: Modal markup -->
+      <nav id="primaryNav">
+        <ul>
+          <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+          <li><a href="results.html">Saved Searches</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="search-section">
+        <h2>Plan Your Content Strategy</h2>
+        <form id="searchForm" novalidate>
+          <div class="form-group">
+            <label for="keyword">
+              Keyword
+              <span class="required" aria-label="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="keyword"
+              name="keyword"
+              placeholder="e.g., digital marketing, healthy recipes"
+              required
+              minlength="2"
+              maxlength="50"
+              aria-describedby="keyword-error"
+            />
+            <span class="field-error" id="keyword-error" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="country">
+              Country
+              <span class="required" aria-label="required">*</span>
+            </label>
+            <select id="country" name="country" required aria-describedby="country-error">
+              <option value="">Select a country</option>
+              <option value="us">United States</option>
+              <option value="uk">United Kingdom</option>
+              <option value="ca">Canada</option>
+              <option value="au">Australia</option>
+              <option value="de">Germany</option>
+              <option value="fr">France</option>
+              <option value="es">Spain</option>
+              <option value="it">Italy</option>
+              <option value="br">Brazil</option>
+              <option value="in">India</option>
+            </select>
+            <span class="field-error" id="country-error" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="industry">Industry</label>
+            <select id="industry" name="industry">
+              <option value="">All Industries</option>
+              <option value="technology">Technology</option>
+              <option value="health">Health & Wellness</option>
+              <option value="finance">Finance</option>
+              <option value="education">Education</option>
+              <option value="marketing">Marketing</option>
+              <option value="ecommerce">E-commerce</option>
+              <option value="food">Food & Beverage</option>
+              <option value="travel">Travel</option>
+              <option value="fashion">Fashion</option>
+              <option value="real-estate">Real Estate</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Notes (Optional)</label>
+            <textarea
+              id="notes"
+              name="notes"
+              rows="3"
+              placeholder="Add any additional notes or context for this search..."
+              maxlength="200"
+            ></textarea>
+          </div>
+
+          <button type="submit" id="submitBtn">
+            <span>Generate Content Ideas</span>
+          </button>
+
+          <p class="auto-save-note">
+            Note: Every time you generate content ideas, your search is automatically saved and
+            will appear on the <strong>Saved Searches</strong> page.
+          </p>
+        </form>
+      </section>
+
+      <section class="info-modal" aria-live="polite">
+        <p>
+          💡 <strong>Pro Tip:</strong> Use specific keywords to get more targeted content ideas for
+          your niche!
+        </p>
+
+        <button type="button" class="open-modal-btn" data-open-modal="#infoModal">
+          How does this work?
+        </button>
+
+        <div
+          class="modal"
+          id="infoModal"
+          aria-hidden="true"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="infoModalTitle"
+        >
+          <div class="modal-overlay" data-close-modal></div>
+          <div class="modal-dialog">
+            <button
+              type="button"
+              class="modal-close"
+              aria-label="Close"
+              data-close-modal
+            >
+              &times;
+            </button>
+            <h2 id="infoModalTitle">How Content Planner Works</h2>
+            <p>
+              Enter a keyword and choose a country. We call the Answer the Public API to fetch real
+              search data, then organize it by volume, difficulty, and CPC so you can quickly spot
+              content ideas.
+            </p>
+            <ul>
+              <li>🔍 Use specific, niche keywords.</li>
+              <li>📈 Focus on high-volume, low-difficulty ideas first.</li>
+              <li>💰 High-CPC ideas can be great for monetized content.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="saved-searches hidden" id="savedSearchesSection">
+        <h2>Recent Searches</h2>
+        <div class="search-history" id="searchHistory"></div>
+      </section>
+
+      <!-- Delete confirmation modal -->
       <div
         class="modal"
-        id="infoModal"
+        id="deleteSearchModal"
         aria-hidden="true"
         role="dialog"
         aria-modal="true"
-        aria-labelledby="infoModalTitle"
+        aria-labelledby="deleteSearchTitle"
       >
-        <div class="modal-overlay" data-close-modal></div>
-
+        <div class="modal-overlay"></div>
         <div class="modal-dialog">
-          <button
-            type="button"
-            class="modal-close"
-            aria-label="Close"
-            data-close-modal
-          >
-            &times;
-          </button>
-
-          <h2 id="infoModalTitle">How Content Planner Works</h2>
+          <h2 id="deleteSearchTitle">Delete saved search?</h2>
           <p>
-            Enter a keyword and choose a country. We call the Answer the Public API
-            to fetch real search data, then organize it by volume, difficulty, and
-            CPC so you can quickly spot content ideas.
+            Are you sure you want to delete this saved search? This action cannot be undone.
           </p>
-          <ul>
-            <li>🔍 Use specific, niche keywords.</li>
-            <li>📈 Focus on high-volume, low-difficulty ideas first.</li>
-            <li>💰 High-CPC ideas can be great for monetized content.</li>
-          </ul>
+          <div class="modal-actions">
+            <button type="button" class="btn-secondary" id="cancelDeleteBtn">
+              Cancel
+            </button>
+            <button type="button" id="confirmDeleteBtn">
+              Delete
+            </button>
+          </div>
         </div>
       </div>
-    </section>
 
-    <section class="saved-searches hidden" id="savedSearchesSection">
-      <h2>Recent Searches</h2>
-      <div class="search-history" id="searchHistory"></div>
-    </section>
-  </main>
+      <!-- NEW: Loading modal for active search -->
+      <div
+        class="modal"
+        id="loadingModal"
+        aria-hidden="true"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="loadingModalTitle"
+      >
+        <div class="modal-overlay"></div>
+        <div class="modal-dialog">
+          <h2 id="loadingModalTitle">Generating content ideas...</h2>
+          <div class="loader" aria-hidden="true"></div>
+          <p class="loading-message">
+            Please wait while we fetch real search data. You can cancel if you want to adjust your
+            keyword or settings.
+          </p>
+          <div class="modal-actions">
+            <button type="button" id="cancelLoadingBtn">Cancel Search</button>
+          </div>
+        </div>
+      </div>
+    </main>
 
-  <footer>
-    <p>&copy; 2025 Content Planner. Powered by Answer the Public API.</p>
-  </footer>
+    <footer>
+      <p>&copy; 2025 Content Planner. Powered by Answer the Public API.</p>
+    </footer>
 
-  <script type="module" src="js/main.js"></script>
-  <!-- NEW: modal script -->
-  <script type="module" src="js/modal.js"></script>
-</body>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/nav.js"></script>
+    <script type="module" src="js/modal.js"></script>
+  </body>
 </html>

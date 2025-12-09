@@ -32,10 +32,8 @@ nav a {
 nav a:hover {
   background-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
-  color: yellow
+  color: yellow;
 }
-
-
 
 @keyframes fadeInDown {
   from {
@@ -48,12 +46,85 @@ nav a:hover {
   }
 }
 
+/* --- NEW: Hamburger menu base styles (desktop: hidden) --- */
+.nav-toggle {
+  display: none; /* shown only in mobile via media query */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-left: auto;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 24px;
+  height: 3px;
+  margin: 4px 0;
+  background-color: white;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Screen-reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Mobile layout + dropdown nav */
 @media (max-width: 768px) {
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   header h1 {
     font-size: 1.5rem;
+    margin-bottom: 0; /* aligns better with nav toggle */
+    text-align: left;
+  }
+
+  /* Show hamburger on small screens */
+  .nav-toggle {
+    display: block;
+  }
+
+  nav {
+    position: relative;
   }
 
   nav ul {
-    gap: 1rem;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color), #0099ff);
+    list-style: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-hover);
+    min-width: 180px;
+    display: none; /* hidden by default in small view */
+  }
+
+  /* When nav is open (toggled via JS) */
+  nav ul.nav-open {
+    display: flex;
+  }
+
+  nav a {
+    display: block;
+    width: 100%;
   }
 }

@@ -61,7 +61,7 @@
   color: var(--danger-color);
 }
 
-/* Optional: style the trigger button slightly differently */
+/* Trigger button for “How does this work?” */
 .open-modal-btn {
   margin-top: 1rem;
   background-color: #fff;
@@ -77,4 +77,32 @@
 .open-modal-btn:hover {
   background-color: var(--primary-color);
   color: #fff;
+}
+
+/* Shared action row for confirmation / loading modals */
+.modal-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* Optional: loading modal message styling */
+.loading-message {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+/* Animation reused by modals */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

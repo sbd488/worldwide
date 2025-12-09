@@ -249,3 +249,11 @@ button.loading::after {
     grid-template-columns: 1fr;
   }
 }
+
+/* NEW: Auto-save hint text */
+.auto-save-note {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  text-align: center;
+}
